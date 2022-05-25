@@ -6,7 +6,7 @@ const Login = ({authService}) => {
   const onLogin = event => {
     authService//
     .login(event.currentTarget.textContent)
-    .then(console.log(logined));
+    .then(console.log('logined'));
   }
   return (
     <section>
