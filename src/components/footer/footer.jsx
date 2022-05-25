@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { memo } from 'react';
+import styles from './footer.module.css';
 
-const Footer = () => {
-  return (
-    <div>
-      Footer
-    </div>
-  )
-}
+const Footer = memo(() => (
+  <footer className={styles.footer}>
+    <p className={styles.title}>Private Company</p>
+  </footer>
+));
 
-export default Footer
+export default Footer;
