@@ -4,11 +4,13 @@ import Card from '@/components/card/card';
 
 const Preview = ({ cards }) => {
   return (
-    <section>
-      <h1 className={styles.preview}>preview</h1>
-      {cards.map((card) => (
-        <Card card={card} />
-      ))}
+    <section className={styles.preview}>
+      <h1 className={styles.title}>Card Preview</h1>
+      <ul className={styles.cards}>
+        {cards.map((card) => (
+          <Card key={card.id} card={card} />
+        ))}
+      </ul>
     </section>
   );
 };

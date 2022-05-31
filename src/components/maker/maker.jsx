@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styles from './maker.module.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import Header from '../header/header';
-import Footer from '../footer/footer';
+import Header from '@/components/header/header';
+import Footer from '@/components/footer/footer';
 import Editor from '@/components/editor/editor';
 import Preview from '@/components/preview/preview';
 
@@ -35,7 +35,7 @@ const Maker = ({ authService }) => {
       email: 'person2@gmail.com',
       message: 'message message message',
       fileName: 'file2',
-      fileURL: 'person2.png',
+      fileURL: null,
     },
     {
       id: 3,
@@ -79,7 +79,6 @@ const Maker = ({ authService }) => {
     <section className={styles.maker}>
       <Header onLogout={onLogout}></Header>
       <div className={styles.container}>
-        {id}
         <Editor cards={cards}></Editor>
         <Preview cards={cards}></Preview>
       </div>
