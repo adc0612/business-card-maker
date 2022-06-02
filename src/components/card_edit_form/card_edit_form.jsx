@@ -1,9 +1,8 @@
 import React, { useRef } from 'react';
 import styles from './card_edit_form.module.css';
 import Button from '@/components/button/button';
-import ImageFileInput from '@/components/image_file_input/image_file_input';
 
-const CardEditForm = ({ card, onEdit, onDelete }) => {
+const CardEditForm = ({ FileInput, card, onEdit, onDelete }) => {
   const nameRef = useRef();
   const companyRef = useRef();
   const themeRef = useRef();
@@ -39,7 +38,7 @@ const CardEditForm = ({ card, onEdit, onDelete }) => {
       <input ref={emailRef} className={styles.input} type='text' name='email' value={email} onChange={onChange} />
       <textarea ref={messageRef} className={styles.textarea} name='message' value={message} onChange={onChange} />
       <div className={styles.fileInput}>
-        <ImageFileInput />
+        <FileInput />
       </div>
       <Button name='Delete' onClick={onSubmit} />
     </form>

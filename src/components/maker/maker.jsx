@@ -7,7 +7,7 @@ import Footer from '@/components/footer/footer';
 import Editor from '@/components/editor/editor';
 import Preview from '@/components/preview/preview';
 
-const Maker = ({ authService }) => {
+const Maker = ({ authService, FileInput }) => {
   // useLocation을 이용해 route에서 온 state접근
   const location = useLocation();
   const { id } = location.state;
@@ -95,7 +95,7 @@ const Maker = ({ authService }) => {
     <section className={styles.maker}>
       <Header onLogout={onLogout}></Header>
       <div className={styles.container}>
-        <Editor cards={cards} onAdd={createOrUpdateCard} onEdit={createOrUpdateCard} onDelete={deleteCard}></Editor>
+        <Editor cards={cards} onAdd={createOrUpdateCard} onEdit={createOrUpdateCard} onDelete={deleteCard} FileInput={FileInput}></Editor>
         <Preview cards={cards}></Preview>
       </div>
       <Footer></Footer>
