@@ -30,7 +30,7 @@ const Maker = ({ authService }) => {
       id: 2,
       name: 'person2',
       company: 'company2',
-      theme: 'light',
+      theme: 'dark',
       title: 'Backed Engineer',
       email: 'person2@gmail.com',
       message: 'message message message',
@@ -41,7 +41,7 @@ const Maker = ({ authService }) => {
       id: 3,
       name: 'person3',
       company: 'company3',
-      theme: 'light',
+      theme: 'colorful',
       title: 'Backed Engineer',
       email: 'person3@gmail.com',
       message: 'message message message',
@@ -52,7 +52,7 @@ const Maker = ({ authService }) => {
       id: 4,
       name: 'person4',
       company: 'company4',
-      theme: 'light',
+      theme: 'dark',
       title: 'Backed Engineer',
       email: 'person4@gmail.com',
       message: 'message message message',
@@ -75,11 +75,16 @@ const Maker = ({ authService }) => {
     });
   });
 
+  const onAdd = (card) => {
+    const newCards = [...cards, card];
+    setCards(newCards);
+  };
+
   return (
     <section className={styles.maker}>
       <Header onLogout={onLogout}></Header>
       <div className={styles.container}>
-        <Editor cards={cards}></Editor>
+        <Editor cards={cards} onAdd={onAdd}></Editor>
         <Preview cards={cards}></Preview>
       </div>
       <Footer></Footer>
