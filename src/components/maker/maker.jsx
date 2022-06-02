@@ -14,8 +14,8 @@ const Maker = ({ authService }) => {
   const navigate = useNavigate();
 
   // eslint-disable-next-line
-  const [cards, setCards] = useState([
-    {
+  const [cards, setCards] = useState({
+    1: {
       id: 1,
       name: 'person1',
       company: 'company1',
@@ -26,7 +26,7 @@ const Maker = ({ authService }) => {
       fileName: 'file1',
       fileURL: 'person1.png',
     },
-    {
+    2: {
       id: 2,
       name: 'person2',
       company: 'company2',
@@ -37,7 +37,7 @@ const Maker = ({ authService }) => {
       fileName: 'file2',
       fileURL: null,
     },
-    {
+    3: {
       id: 3,
       name: 'person3',
       company: 'company3',
@@ -48,7 +48,7 @@ const Maker = ({ authService }) => {
       fileName: 'file3',
       fileURL: 'person3.png',
     },
-    {
+    4: {
       id: 4,
       name: 'person4',
       company: 'company4',
@@ -59,7 +59,7 @@ const Maker = ({ authService }) => {
       fileName: 'file4',
       fileURL: 'person4.png',
     },
-  ]);
+  });
 
   // firebase logout 기능 호출
   const onLogout = () => {
@@ -75,16 +75,27 @@ const Maker = ({ authService }) => {
     });
   });
 
-  const onAdd = (card) => {
-    const newCards = [...cards, card];
-    setCards(newCards);
+  const createOrUpdateCard = (card) => {
+    setCards((cards) => {
+      const updated = { ...cards };
+      updated[card.id] = card;
+      return updated;
+    });
+  };
+
+  const deleteCard = (card) => {
+    setCards((cards) => {
+      const updated = { ...cards };
+      delete updated[card.id];
+      return updated;
+    });
   };
 
   return (
     <section className={styles.maker}>
       <Header onLogout={onLogout}></Header>
       <div className={styles.container}>
-        <Editor cards={cards} onAdd={onAdd}></Editor>
+        <Editor cards={cards} onAdd={createOrUpdateCard} onEdit={createOrUpdateCard} onDelete={deleteCard}></Editor>
         <Preview cards={cards}></Preview>
       </div>
       <Footer></Footer>
