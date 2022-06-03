@@ -7,69 +7,37 @@ import Footer from '@/components/footer/footer';
 import Editor from '@/components/editor/editor';
 import Preview from '@/components/preview/preview';
 
-const Maker = ({ authService, FileInput }) => {
+const Maker = ({ authService, FileInput, cardRepository }) => {
   // useLocation을 이용해 route에서 온 state접근
   const location = useLocation();
   const { id } = location.state;
   const navigate = useNavigate();
-
-  // eslint-disable-next-line
-  const [cards, setCards] = useState({
-    1: {
-      id: 1,
-      name: 'person1',
-      company: 'company1',
-      theme: 'light',
-      title: 'Backed Engineer',
-      email: 'person1@gmail.com',
-      message: 'message message message',
-      fileName: 'file1',
-      fileURL: 'person1.png',
-    },
-    2: {
-      id: 2,
-      name: 'person2',
-      company: 'company2',
-      theme: 'dark',
-      title: 'Backed Engineer',
-      email: 'person2@gmail.com',
-      message: 'message message message',
-      fileName: 'file2',
-      fileURL: null,
-    },
-    3: {
-      id: 3,
-      name: 'person3',
-      company: 'company3',
-      theme: 'colorful',
-      title: 'Backed Engineer',
-      email: 'person3@gmail.com',
-      message: 'message message message',
-      fileName: 'file3',
-      fileURL: 'person3.png',
-    },
-    4: {
-      id: 4,
-      name: 'person4',
-      company: 'company4',
-      theme: 'dark',
-      title: 'Backed Engineer',
-      email: 'person4@gmail.com',
-      message: 'message message message',
-      fileName: 'file4',
-      fileURL: 'person4.png',
-    },
-  });
+  const [cards, setCards] = useState({});
+  const [userId, setUserId] = useState(id ? id : '');
 
   // firebase logout 기능 호출
   const onLogout = () => {
     authService.logout();
   };
 
+  // Cards sync firebase 호출
+  // mount 될때와 userid가 바뀌었을 때만 호출
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    const stopSync = cardRepository.syncCards(userId, (cards) => {
+      setCards(cards);
+    });
+    return () => stopSync();
+  }, [userId]);
+
   // onAuthChange에 user가 없을때 홈으로 되돌아가기
   useEffect(() => {
     authService.onAuthChange((user) => {
-      if (!user) {
+      if (user) {
+        setUserId(user.uid);
+      } else {
         navigate('/');
       }
     });
@@ -81,6 +49,7 @@ const Maker = ({ authService, FileInput }) => {
       updated[card.id] = card;
       return updated;
     });
+    cardRepository.saveCard(userId, card);
   };
 
   const deleteCard = (card) => {
@@ -89,6 +58,7 @@ const Maker = ({ authService, FileInput }) => {
       delete updated[card.id];
       return updated;
     });
+    cardRepository.removeCard(userId, card);
   };
 
   return (

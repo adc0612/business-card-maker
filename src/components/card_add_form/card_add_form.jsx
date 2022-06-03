@@ -29,8 +29,8 @@ const CardEditForm = ({ FileInput, onAdd }) => {
       fileName: file.fileName || '',
       fileURL: file.fileURL || '',
     };
-    onAdd(card);
     formRef.current.reset();
+    onAdd(card);
   };
 
   return (
