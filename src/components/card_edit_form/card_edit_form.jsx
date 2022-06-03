@@ -11,6 +11,13 @@ const CardEditForm = ({ FileInput, card, onEdit, onDelete }) => {
   const messageRef = useRef();
   const { name, company, theme, title, email, message, fileName, fileURL } = card;
 
+  const onFileChange = ({ name, url }) => {
+    onEdit({
+      ...card,
+      fileName: name,
+      fileURL: url,
+    });
+  };
   const onChange = (event) => {
     // 비어있으면 그냥 리턴 (아무것도 하지 않음)
     if (event.currentTarget === null) {
@@ -38,7 +45,7 @@ const CardEditForm = ({ FileInput, card, onEdit, onDelete }) => {
       <input ref={emailRef} className={styles.input} type='text' name='email' value={email} onChange={onChange} />
       <textarea ref={messageRef} className={styles.textarea} name='message' value={message} onChange={onChange} />
       <div className={styles.fileInput}>
-        <FileInput />
+        <FileInput name={fileName} onFileChange={onFileChange} />
       </div>
       <Button name='Delete' onClick={onSubmit} />
     </form>
